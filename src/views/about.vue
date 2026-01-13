@@ -9,56 +9,55 @@
         <section class="info-section">
           <h3>插件简介</h3>
           <p>
-            随机生成虚假数据插件，是一款 <strong>开源</strong>、<strong>免费</strong> 的 uTools 插件。
-            旨在帮助开发和测试人员在开发阶段快速生成测试数据。
+            随机生成虚假的母狗的自述的插件，是一款 <strong>开源</strong>、<strong>免费</strong> 的 uTools 插件。
           </p>
           <p>
             内置了部分常见的生成规则，生成的内容符合特定校验规则（如身份证、手机号等），但均为 <strong>虚构数据</strong>，请勿用于非法用途。
           </p>
         </section>
 
-                <section class="appreciation-section">
-          <h3>赞赏作者</h3>
-          <div class="link-cards">
-            <div class="link-card appreciation-card" @click="showAppreciation = true">
-              <div class="link-icon-wrapper appreciation-icon">
-                <el-icon class="link-icon"><Coffee /></el-icon>
-              </div>
-              <div class="link-info">
-                <span class="link-label">微信赞赏码</span>
-                <span class="link-url">如果这个插件对你有帮助，欢迎请作者喝杯咖啡 ☕</span>
-              </div>
-              <el-icon class="arrow-icon"><ArrowRight /></el-icon>
-            </div>
-          </div>
-        </section>
-        
-        <section class="links-section">
-          <h3>项目链接</h3>
-          <div class="link-cards">
-            <div class="link-card" @click="openGithub">
-              <div class="link-icon-wrapper">
-                <el-icon class="link-icon"><Share /></el-icon>
-              </div>
-              <div class="link-info">
-                <span class="link-label">GitHub 源码</span>
-                <span class="link-url">iamxiyang/utools-random-data</span>
-              </div>
-              <el-icon class="arrow-icon"><ArrowRight /></el-icon>
-            </div>
-          </div>
-        </section>
+<!--        <section class="appreciation-section">-->
+<!--          <h3>赞赏作者</h3>-->
+<!--          <div class="link-cards">-->
+<!--            <div class="link-card appreciation-card" @click="showAppreciation = true">-->
+<!--              <div class="link-icon-wrapper appreciation-icon">-->
+<!--                <el-icon class="link-icon"><Coffee /></el-icon>-->
+<!--              </div>-->
+<!--              <div class="link-info">-->
+<!--                <span class="link-label">微信赞赏码</span>-->
+<!--                <span class="link-url">如果这个插件对你有帮助，欢迎请作者喝杯咖啡 ☕</span>-->
+<!--              </div>-->
+<!--              <el-icon class="arrow-icon"><ArrowRight /></el-icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </section>-->
+<!--        -->
+<!--        <section class="links-section">-->
+<!--          <h3>项目链接</h3>-->
+<!--          <div class="link-cards">-->
+<!--            <div class="link-card" @click="openGithub">-->
+<!--              <div class="link-icon-wrapper">-->
+<!--                <el-icon class="link-icon"><Share /></el-icon>-->
+<!--              </div>-->
+<!--              <div class="link-info">-->
+<!--                <span class="link-label">GitHub 源码</span>-->
+<!--                <span class="link-url">iamxiyang/utools-random-data</span>-->
+<!--              </div>-->
+<!--              <el-icon class="arrow-icon"><ArrowRight /></el-icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </section>-->
 
 
       </div>
 
       <!-- 赞赏码弹窗 -->
-      <el-dialog v-model="showAppreciation" title="赞赏作者" width="320px" center>
-        <div class="appreciation-dialog">
-          <img src="/wechat-appreciation.jpg" alt="微信赞赏码" class="appreciation-qr" />
-          <p class="appreciation-tip">感谢您的支持，作者会继续努力！</p>
-        </div>
-      </el-dialog>
+<!--      <el-dialog v-model="showAppreciation" title="赞赏作者" width="320px" center>-->
+<!--        <div class="appreciation-dialog">-->
+<!--          <img src="/wechat-appreciation.jpg" alt="微信赞赏码" class="appreciation-qr" />-->
+<!--          <p class="appreciation-tip">感谢您的支持，作者会继续努力！</p>-->
+<!--        </div>-->
+<!--      </el-dialog>-->
 
       <div class="about-footer">
         <p>Made with ❤️ by <span class="author">iamxiyang</span></p>
