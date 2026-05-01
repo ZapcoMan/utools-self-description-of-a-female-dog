@@ -1,5 +1,6 @@
 import sample from 'lodash.sample'
 import random from 'lodash.random'
+import addressJson from './address.json'
 
 // 手机号
 export const phone = (prefix: boolean = false) => {
@@ -292,14 +293,31 @@ export const username = () => {
   return sample(firstName) + sample(lastName)
 }
 
-// 身份证号
-export const IdCard = (maxAge: number = 50, minAge: number = 18) => {
-  // 身份证号码生成，规则参考：https://baike.baidu.com/item/%E5%B1%85%E6%B0%91%E8%BA%AB%E4%BB%BD%E8%AF%81%E5%8F%B7%E7%A0%81/3400358
-
-  // 第一、二位表示省级行政区。
-  const provinceList = [11, 12, 13, 14, 15, 21, 22, 23, 31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45, 46, 50, 51, 52, 53, 54, 61, 62, 63, 64, 65]
-  // 第三、四位表示地级行政区；第五、六位表示县级行政区。
-  const cityList = ['0101', '0201']
+// 生成一致的身份证号和地址信息
+export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) => {
+  // 随机选择省份
+  const provinceSample = sample(addressJson)
+  if (!provinceSample) {
+    throw new Error('Failed to sample province from addressJson')
+  }
+  const province = provinceSample
+  const provinceCode = province.code
+  
+  // 随机选择城市
+  const citySample = sample(province.children)
+  if (!citySample) {
+    throw new Error('Failed to sample city from province')
+  }
+  const city = citySample
+  const cityCode = city.code
+  
+  // 随机选择区县
+  const countySample = sample(city.children)
+  if (!countySample) {
+    throw new Error('Failed to sample county from city')
+  }
+  const county = countySample
+  const countyCode = county.code
 
   // 随机生成一个生日
   const birthday = (separator = '') => {
@@ -319,10 +337,30 @@ export const IdCard = (maxAge: number = 50, minAge: number = 18) => {
   }
 
   let iSum = 0
-  // @ts-ignore
-  const sId = sample(provinceList) + sample(cityList) + birthday() + String(random(100, 999))
-  for (let i = 17; i >= 1; i--) {
-    iSum += (Math.pow(2, i) % 11) * parseInt(sId.charAt(17 - i), 11)
+  // 生成18位身份证号的前17位：省市区代码 + 出生日期 + 顺序码
+  const areaCode = provinceCode + cityCode.slice(2) + countyCode.slice(4) // 拼接省市县代码
+  const birthDate = birthday('')
+  const sequenceCode = String(random(100, 999)) // 顺序码（3位）
+  const sId = areaCode + birthDate + sequenceCode
+  
+  // 计算校验码
+  for (let i = 0; i < 17; i++) {
+    iSum += parseInt(sId.charAt(i)) * Math.pow(2, 17 - i) % 11
   }
-  return sId + getValidationCode(iSum)
+  
+  const checkCode = getValidationCode(iSum)
+  const idCard = sId + checkCode
+  
+  return {
+    idCard,
+    province: province.name,
+    city: city.name,
+    county: county.name,
+    address: `${province.name}${city.name}${county.name}`
+  }
+}
+
+// 身份证号（兼容原有接口）
+export const IdCard = (maxAge: number = 50, minAge: number = 18) => {
+  return getIdCardAndAddress(maxAge, minAge).idCard
 }

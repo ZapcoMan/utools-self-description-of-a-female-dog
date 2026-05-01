@@ -1,4 +1,5 @@
 import { address, middleSchool } from './address'
+import { getIdCardAndAddress } from './people'
 import sample from 'lodash.sample'
 
 // 女生姓名
@@ -229,10 +230,12 @@ export const mgFullInfo = () => {
   //   onlineTime: getonlineTime(),
   //   lowerBodyColor: getlowerBodyColor(),
   // }
+  const idCardInfo = getIdCardAndAddress()
   return `
 姓名：${girlName()} 
 年龄：${age()}
-地址： ${address()} 
+身份证号：${idCardInfo.idCard}
+地址： ${idCardInfo.address} 
 学校： ${middleSchool()} 
 罩杯： ${sample(cups)} 
 在线时间：${getonlineTime()} 
