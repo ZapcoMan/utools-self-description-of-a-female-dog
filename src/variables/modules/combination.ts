@@ -250,5 +250,4 @@ export const mgFullInfo = () => {
 最喜欢被操那个洞：${HoleForSex()}
 `
 }
-}
 
