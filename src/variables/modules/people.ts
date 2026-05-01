@@ -337,17 +337,23 @@ export const getIdCardAndAddress = (specificAge?: number) => {
     return arr[remainder]
   }
 
-  let iSum = 0
   // 生成一个年龄，如果未指定则在15-25范围内随机
   const useAge = specificAge !== undefined ? specificAge : Math.floor(Math.random() * 11) + 15 // 15-25岁
   const birthDate = birthday(useAge, '')
   
   // 生成18位身份证号的前17位：省市区代码 + 出生日期 + 顺序码
   const areaCode = provinceCode + cityCode.slice(2) + countyCode.slice(4) // 拼接省市县代码
-  const sequenceCode = String(random(100, 999)) // 顺序码（3位）
+  
+  // 生成顺序码，确保性别为女性（第17位为偶数）
+  let sequenceCode: string
+  do {
+    sequenceCode = String(random(100, 999)) // 顺序码（3位）
+  } while (parseInt(sequenceCode.charAt(2)) % 2 !== 0) // 确保最后一位（即身份证第17位）是偶数（女性）
+  
   const sId = areaCode + birthDate + sequenceCode
   
   // 计算校验码
+  let iSum = 0
   for (let i = 0; i < 17; i++) {
     iSum += parseInt(sId.charAt(i)) * Math.pow(2, 17 - i) % 11
   }
