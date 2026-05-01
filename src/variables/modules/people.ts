@@ -294,7 +294,7 @@ export const username = () => {
 }
 
 // 生成一致的身份证号和地址信息
-export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) => {
+export const getIdCardAndAddress = (specificAge?: number) => {
   // 随机选择省份
   const provinceSample = sample(addressJson)
   if (!provinceSample) {
@@ -320,13 +320,14 @@ export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) =>
   const countyCode = county.code
 
   // 随机生成一个生日
-  const birthday = (separator = '') => {
+  const birthday = (age: number, separator = '') => {
     const date = new Date()
-    const start = date.getTime() - maxAge * 365 * 24 * 60 * 60 * 1000
-    const end = date.getTime() - minAge * 365 * 24 * 60 * 60 * 1000
-    const ageDate = random(start, end)
-    date.setTime(ageDate)
-    return `${date.getFullYear()}${separator}${String(date.getMonth() + 1).padStart(2, '0')}${separator}${String(date.getDate()).padStart(2, '0')}`
+    const birthYear = date.getFullYear() - age
+    // 随机生成月份和日期
+    const month = Math.floor(Math.random() * 12) + 1
+    const maxDay = month === 2 ? 28 : [4, 6, 9, 11].includes(month) ? 30 : 31
+    const day = Math.floor(Math.random() * maxDay) + 1
+    return `${birthYear}${separator}${String(month).padStart(2, '0')}${separator}${String(day).padStart(2, '0')}`
   }
 
   // 根据前17位计算第18位效验码
@@ -337,9 +338,12 @@ export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) =>
   }
 
   let iSum = 0
+  // 生成一个年龄，如果未指定则在15-25范围内随机
+  const useAge = specificAge !== undefined ? specificAge : Math.floor(Math.random() * 11) + 15 // 15-25岁
+  const birthDate = birthday(useAge, '')
+  
   // 生成18位身份证号的前17位：省市区代码 + 出生日期 + 顺序码
   const areaCode = provinceCode + cityCode.slice(2) + countyCode.slice(4) // 拼接省市县代码
-  const birthDate = birthday('')
   const sequenceCode = String(random(100, 999)) // 顺序码（3位）
   const sId = areaCode + birthDate + sequenceCode
   
@@ -353,6 +357,7 @@ export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) =>
   
   return {
     idCard,
+    age: useAge,
     province: province.name,
     city: city.name,
     county: county.name,
@@ -362,5 +367,6 @@ export const getIdCardAndAddress = (maxAge: number = 50, minAge: number = 18) =>
 
 // 身份证号（兼容原有接口）
 export const IdCard = (maxAge: number = 50, minAge: number = 18) => {
-  return getIdCardAndAddress(maxAge, minAge).idCard
+  const age = Math.floor(Math.random() * (maxAge - minAge + 1)) + minAge
+  return getIdCardAndAddress(age).idCard
 }

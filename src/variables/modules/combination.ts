@@ -143,7 +143,7 @@ export const girlName = () => {
   return sample(firstName) + sample(girlLastNames)
 }
 const age = () => {
-  return Math.floor(Math.random() * 5) + 15
+  return Math.floor(Math.random() * 11) + 15 // 15-25岁
 }
 const cups=[
   'A', 'A-', 'A+', 'B+', 'B', 'B-', 'C', 'C+','C-', 'D', 'D+','D-',
@@ -233,7 +233,7 @@ export const mgFullInfo = () => {
   const idCardInfo = getIdCardAndAddress()
   return `
 姓名：${girlName()} 
-年龄：${age()}
+年龄：${idCardInfo.age}
 身份证号：${idCardInfo.idCard}
 地址： ${idCardInfo.address} 
 学校： ${middleSchool()} 
@@ -249,5 +249,6 @@ export const mgFullInfo = () => {
 做爱姿势是什么：${Posture()}
 最喜欢被操那个洞：${HoleForSex()}
 `
+}
 }
 
