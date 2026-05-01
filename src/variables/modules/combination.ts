@@ -248,6 +248,7 @@ export const mgFullInfo = () => {
 喜欢被叫做什么：${whatDoYouLikeToBeCalled()}
 做爱姿势是什么：${Posture()}
 最喜欢被操那个洞：${HoleForSex()}
+----------------------------------------------------------------------------
 `
 }
 
